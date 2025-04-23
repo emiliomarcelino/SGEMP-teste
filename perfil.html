@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGEMP - Perfil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Animações css personalizadas */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes scaleUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-scale-up {
+            animation: scaleUp 0.3s ease-out forwards;
+        }
+        
+        /* Animacao para o sidebar do mobile */
+        .sidebar-slide-in {
+            animation: slideInLeft 0.3s ease-out forwards;
+        }
+        
+        /* animacao para os elementos do menu */
+        .menu-item-appear {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .menu-item-appear:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item-appear:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item-appear:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item-appear:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item-appear:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* animacao para as linhas da tabela */
+        .table-row-appear {
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        .table-row-appear:nth-child(1) { animation-delay: 0.1s; }
+        .table-row-appear:nth-child(2) { animation-delay: 0.15s; }
+        .table-row-appear:nth-child(3) { animation-delay: 0.2s; }
+        .table-row-appear:nth-child(4) { animation-delay: 0.25s; }
+        .table-row-appear:nth-child(5) { animation-delay: 0.3s; }
+    </style>
+    
+    <!-- configuracoes personalizadas do tailwind inline -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'body-color': '#030129',
+                        "azul-btn": "#089be7",
+                        'morse-azul': '#0b96ec',
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-blue-950">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar de pc -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-body-color border-r border-gray-200">
+                <!-- logotipo da empresa -->
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-10 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <!-- menu -->
+                <div class="flex flex-col flex-grow px-4 py-4 mt-10 bg-body-color">
+                    <nav class="flex-1 space-y-2">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Dashboard
+                        </a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Clientes
+                        </a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Produtos/Serviços
+                        </a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Vendas
+                        </a>
+                    </nav>
+                    <div class="mt-auto">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- conteudo superior-->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Navbar -->
+            <div class="flex items-center justify-between h-16 px-6 bg-body-color">
+                <div class="flex items-center">
+                    <button class="p-1 mr-4 text-gray-500 rounded-md md:hidden focus:outline-none focus:ring-2 focus:ring-primary-500 transition-transform duration-200 hover:scale-110 active:scale-95" id="sidebarToggle">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <h2 class="text-xl font-semibold text-white">Perfil</h2>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 overflow-hidden bg-primary-100 rounded-full">
+                            <a href="perfil.html"><i data-lucide="user" class="w-full h-full p-1 text-primary-600"></i></a>
+                        </div>
+                        <!-- nome do admin -->
+                        <span class="max-sm:hidden font-medium text-white">Sandino Administrador</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- conteudo da pagina -->
+            <main class="flex-1 p-6 overflow-y-auto">
+                <!-- Secao onde mostra o nome do admin logado -->
+                <div class="p-6 mb-8 bg-body-color rounded-lg shadow-sm animate-fade-in">
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div class="p-3 bg-primary-100 rounded-full">
+                                <i data-lucide="user" class="w-8 h-8 text-primary-600"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Configurações de Perfil</h3>
+                            <p class="text-white">Gerencie suas informações pessoais e preferências de conta.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Conteúdo principal -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 opacity-0 animate-fade-in" style="animation-delay: 0.2s;">
+                    <!-- Menu lateral -->
+                    <div class="bg-white rounded-lg shadow-sm p-4">
+                        <nav class="space-y-1">
+                            <button 
+                                onclick="changeTab('perfil')"
+                                class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 bg-primary-600 text-white"
+                                id="tab-perfil"
+                            >
+                                <i data-lucide="user" class="w-5 h-5 mr-3"></i>
+                                Informações Pessoais
+                            </button>
+                            <button 
+                                onclick="changeTab('senha')"
+                                class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 text-gray-700 hover:bg-primary-50 hover:text-primary-700"
+                                id="tab-senha"
+                            >
+                                <i data-lucide="lock" class="w-5 h-5 mr-3"></i>
+                                Alterar Senha
+                            </button>
+                            <button 
+                                onclick="changeTab('notificacoes')"
+                                class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 text-gray-700 hover:bg-primary-50 hover:text-primary-700"
+                                id="tab-notificacoes"
+                            >
+                                <i data-lucide="bell" class="w-5 h-5 mr-3"></i>
+                                Notificações
+                            </button>
+                            <button 
+                                onclick="changeTab('configuracoes')"
+                                class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 text-gray-700 hover:bg-primary-50 hover:text-primary-700"
+                                id="tab-configuracoes"
+                            >
+                                <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                                Configurações
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Cconteudo da aba selecionada -->
+                    <div class="md:col-span-3 bg-white rounded-lg shadow-sm p-6">
+                        <!-- aba de info pessoal -->
+                        <div id="content-perfil" class="animate-fade-in">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Informações Pessoais</h3>
+                            
+                            <div class="mb-6 flex flex-col items-center sm:flex-row sm:items-start">
+                                <!-- Foto de perfil -->
+                                <div class="relative mb-4 sm:mb-0 sm:mr-6">
+                                    <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-100">
+                                        <img 
+                                            src="#"  
+                                            alt="Foto de perfil" 
+                                            class="w-full h-full object-cover"
+                                            id="profile-image"
+                                        />
+                                    </div>
+                                    <button class="absolute bottom-0 right-0 bg-primary-600 text-white p-1.5 rounded-full transition-all duration-200 hover:bg-primary-700">
+                                        <i data-lucide="camera" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="w-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- nome completo do admin -->
+                                        <div>
+                                            <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">
+                                                Nome Completo
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="nome"
+                                                name="nome"
+                                                value=""
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                            />
+                                        </div>
+
+                                        <!-- cargo/posicao -->
+                                        <div>
+                                            <label for="cargo" class="block text-sm font-medium text-gray-700 mb-1">
+                                                Cargo
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="cargo"
+                                                name="cargo"
+                                                value="Administrador"
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                            />
+                                        </div>
+                                        
+                                        <!-- email do admin -->
+                                        <div>
+                                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                                                Email
+                                            </label>
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                value=""
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <!-- botao pra salvar as alteracoes feitas no site -->
+                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md shadow-sm transition-all duration-200 hover:bg-primary-700 flex items-center">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                                    Salvar Alterações
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- secao de alterar a senha -->
+                        <div id="content-senha" class="animate-fade-in hidden">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Alterar Senha</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="senha-atual" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Senha Atual
+                                    </label>
+                                    <!-- input para colocar a seenha atual -->
+                                    <input
+                                        type="password"
+                                        id="senha-atual"
+                                        name="senha-atual"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label for="nova-senha" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Nova Senha
+                                    </label>
+                                    <!-- Input para colocar a nova senha -->
+                                    <input
+                                        type="password"
+                                        id="nova-senha"
+                                        name="nova-senha"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <label for="confirmar-senha" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Confirmar Nova Senha
+                                    </label>
+                                    <!-- Input para confirmar a nova senha -->
+                                    <input
+                                        type="password"
+                                        id="confirmar-senha"
+                                        name="confirmar-senha"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                                    />
+                                </div>
+                            </div>
+                            
+                        <!-- botao para confirmar/finalizar a alteracao da senha -->
+                            <div class="flex justify-end mt-6">
+                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md shadow-sm transition-all duration-200 hover:bg-primary-700 flex items-center">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                                    Atualizar Senha
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- secao de notificacoes -->
+                        <div id="content-notificacoes" class="animate-fade-in hidden">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Preferências de Notificações</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Resumo Semanal</h4>
+                                        <p class="text-sm text-gray-500">Receba um resumo semanal das atividades</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <!-- Input para ativar/desativar as notificacoes do resumo semanal -->
+                                        <input type="checkbox" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- botao para salvar as preferencias de notficacoes -->
+                            <div class="flex justify-end mt-6">
+                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md shadow-sm transition-all duration-200 hover:bg-primary-700 flex items-center">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                                    Salvar Preferências
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- secao de configuracoes -->
+                        <div id="content-configuracoes" class="animate-fade-in hidden">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Configurações da Conta</h3>
+                            <!-- select para escolher o idioma do sistema -->
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Idioma</h4>
+                                        <p class="text-sm text-gray-500">Selecione o idioma de exibição do sistema</p>
+                                    </div>
+                                    <!-- o select para escolher o idioma  -->
+                                    <select class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                        <option value="pt-BR" selected>Português (Brasil)</option>
+                                        <option value="en-US">English (US)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- area de desativacao da conta  -->
+                            <div class="mt-8 p-4 bg-red-50 rounded-md">
+                                <h4 class="text-sm font-medium text-red-800 mb-2">Zona de Perigo</h4>
+                                <p class="text-sm text-red-600 mb-4">Ações que podem afetar permanentemente sua conta</p>
+                                <!-- botao para desativar a conta -->
+                                <button class="px-4 py-2 bg-white text-red-600 border border-red-300 rounded-md shadow-sm transition-all duration-200 hover:bg-red-50">Desativar Conta</button>
+                            </div>
+                            
+                            <!-- botao para salvar as configuracoes feitas -->
+                            <div class="flex justify-end mt-6">
+                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md shadow-sm transition-all duration-200 hover:bg-primary-700 flex items-center">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                                    Salvar Configurações
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- sidebar do mobile -->
+    <div class="fixed inset-0 z-40 hidden bg-body-color bg-opacity-75 transition-opacity duration-300 md:hidden" id="mobileSidebar">
+        <div class="fixed inset-y-0 left-0 z-40 flex w-full max-w-xs transform -translate-x-full transition-transform duration-300 ease-in-out" id="sidebarContainer">
+            <div class="relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-body-color">
+                <div class="absolute top-0 right-0 pt-2 -mr-12">
+                    <button class="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-transform duration-200 hover:scale-110 active:scale-95" id="closeSidebar">
+                        <i data-lucide="x" class="w-6 h-6 text-white"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-1 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <div class="flex-1 h-0 overflow-y-auto mt-10">
+                    <nav class="px-2 space-y-1">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>Dashboard</a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>Clientes</a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>Produtos/Serviços</a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>Vendas</a>
+                        <div class="pt-4 mt-6 border-t border-gray-200 menu-item-appear">
+                            <a href="#" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                                <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>Sair</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="flex-shrink-0 w-14" aria-hidden="true">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // inicializar icones da lucide
+        lucide.createIcons();
+
+        // toggle da sidebar mobile com animacao
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const sidebarContainer = document.getElementById('sidebarContainer');
+            
+            sidebar.classList.remove('hidden');
+            setTimeout(() => {
+                sidebar.classList.add('opacity-100');
+                sidebarContainer.classList.remove('-translate-x-full');
+            }, 50);
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const sidebarContainer = document.getElementById('sidebarContainer');
+            
+            sidebar.classList.add('opacity-0');
+            sidebarContainer.classList.add('-translate-x-full');
+            
+            setTimeout(() => {
+                sidebar.classList.add('hidden');
+            }, 300);
+        });
+
+        // funcao para alternar entre as abas
+        function changeTab(tabName) {
+            // esconder todos os conteudos
+            document.querySelectorAll('[id^="content-"]').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // mostra o conteudo selecionado
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            
+            // atualiza os botoes de navegacao
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.remove('bg-primary-600', 'text-white');
+                tab.classList.add('text-gray-700', 'hover:bg-primary-50', 'hover:text-primary-700');
+            });
+            
+            // destacar o botao selecionado
+            const selectedTab = document.getElementById('tab-' + tabName);
+            selectedTab.classList.remove('text-gray-700', 'hover:bg-primary-50', 'hover:text-primary-700');
+            selectedTab.classList.add('bg-primary-600', 'text-white');
+        }
+    </script>
+</body>
+</html>

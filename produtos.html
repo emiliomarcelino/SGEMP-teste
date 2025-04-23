@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGEMP - Produtos/Serviços</title> 
+     <!-- linkagem para rodar o tailwind diretamente de um CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- linkagem para rodar o tailwind diretamente de um CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Animações personalizadas */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes scaleUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-scale-up {
+            animation: scaleUp 0.3s ease-out forwards;
+        }
+        
+        /* Animação para o sidebar mobile */
+        .sidebar-slide-in {
+            animation: slideInLeft 0.3s ease-out forwards;
+        }
+        
+        /* Animação para os itens do menu */
+        .menu-item-appear {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .menu-item-appear:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item-appear:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item-appear:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item-appear:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item-appear:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* Animação para linhas da tabela */
+        .table-row-appear {
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        .table-row-appear:nth-child(1) { animation-delay: 0.1s; }
+        .table-row-appear:nth-child(2) { animation-delay: 0.15s; }
+        .table-row-appear:nth-child(3) { animation-delay: 0.2s; }
+        .table-row-appear:nth-child(4) { animation-delay: 0.25s; }
+        .table-row-appear:nth-child(5) { animation-delay: 0.3s; }
+    </style>
+
+    <!-- configuracoes personalizadas do tailwind inline -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'body-color': '#030129',
+                        "azul-btn": "#089be7",
+                        'morse-azul': '#0b96ec',
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-blue-950">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-body-color border-r border-gray-200">
+                <!-- logotipo e o nome da empresa -->
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-10 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <!-- elemntos menu lateral-->
+                <div class="flex flex-col flex-grow px-4 py-4 mt-10 bg-body-color">
+                    <nav class="flex-1 space-y-2">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Dashboard
+                        </a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Clientes
+                        </a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md group transition-all duration-200 hover:bg-primary-700">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 transition-transform duration-200 group-hover:scale-110"></i>
+                            Produtos/Serviços
+                        </a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Vendas
+                        </a>
+                    </nav>
+                    <div class="mt-auto">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- menu superior com nome da pagina e nome do admin logado -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Navbar -->
+            <div class="flex items-center justify-between h-16 px-6 bg-body-color">
+                <div class="flex items-center">
+                    <button class="p-1 mr-4 text-gray-500 rounded-md md:hidden focus:outline-none focus:ring-2 focus:ring-primary-500 transition-transform duration-200 hover:scale-110 active:scale-95" id="sidebarToggle">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <h2 class="text-xl font-semibold text-white">Produtos/Serviços</h2>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 overflow-hidden bg-primary-100 rounded-full">
+                            <button><a href="perfil.html"><i data-lucide="user" class="w-full h-full p-1 text-primary-600"></i></a></button>
+                        </div>
+                        <!-- nome do admin -->
+                        <span class="max-sm:hidden text-sm font-medium text-white">Sandino Administrador</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- conteudo principal da pagina -->
+            <main class="flex-1 p-6 overflow-y-auto">
+                <!-- area onde exibe o nome do admin a saudacao -->
+                <div class="p-6 mb-8 bg-body-color rounded-lg shadow-sm animate-fade-in">
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div class="p-3 bg-primary-100 rounded-full">
+                                <i data-lucide="package" class="w-8 h-8 text-primary-600"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <!-- nome do admin deve estar aqui-->
+                            <h3 class="text-2xl font-bold text-white">Olá, Sandino Administrador!</h3>
+                            <p class="text-gray-600">Bem-vindo de volta. Aqui você pode gerenciar todos os seus produtos e serviços.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between mb-6 opacity-0 animate-fade-in" style="animation-delay: 0.2s;">
+                    <div>
+                        <h3 class="text-lg font-medium text-white">Lista de Produtos e Serviços</h3>
+                        <p class="text-sm text-white">Gerencie todos os produtos e serviços oferecidos</p>
+                    </div>
+                    <!-- botao para abrir o painel para adicionar novos produtos -->
+                    <button class="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md transition-all duration-300 hover:bg-primary-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transform hover:-translate-y-1 active:translate-y-0" id="openAddProductModal">
+                        <i data-lucide="plus" class="inline w-4 h-4 mr-1"></i> Adicionar Produto/Serviço
+                    </button>
+                </div>
+
+                <!-- Tabela de Produtos -->
+                <div class="overflow-hidden bg-white rounded-lg shadow-sm transition-all duration-300 hover:shadow-md opacity-0 animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="p-4 sm:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <!-- input para pesquisar os produtos -->
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                                </div>
+                                <input type="text" class="block w-full py-2 pl-10 pr-3 text-sm border border-gray-300 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500" placeholder="Buscar produtos...">
+                            </div>
+
+                            <!-- select para visualizar os produtos de acordo com a categoria slecionada -->
+                            <div>
+                                <select class="block w-full py-2 pl-3 pr-10 text-sm border border-gray-300 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="">Todas as categorias</option>
+                                    <option value="software">Software</option>
+                                    <option value="hardware">Hardware</option>
+                                    <option value="consultoria">Consultoria</option>
+                                    <option value="suporte">Suporte</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- area da tabela de visualizacao dos produtos -->
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Nome</th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Categoria</th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Valor</th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50 table-row-appear">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">SaaS</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full transition-all duration-200 hover:bg-green-200">
+                                                Software
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Mzn 100.000,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                             <!-- area dos botoes de editar e remover produtos-->
+                                            <div class="flex space-x-2">
+                                                 <!-- botao para editar produtos-->
+                                                <button class="p-1 text-blue-600 transition-transform duration-200 hover:text-blue-800 hover:scale-110" onclick="openEditProductModal(1)">
+                                                    <i data-lucide="edit" class="w-5 h-5"></i>
+                                                </button>
+                                                 <!-- botao para remover produtos-->
+                                                <button class="p-1 text-red-600 transition-transform duration-200 hover:text-red-800 hover:scale-110" onclick="confirmDeleteProduct(1)">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50 table-row-appear">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Consultoria em TI</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-blue-800 bg-blue-100 rounded-full transition-all duration-200 hover:bg-blue-200">
+                                                Consultoria
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Mzn 1500/hora</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 transition-transform duration-200 hover:text-blue-800 hover:scale-110" onclick="openEditProductModal(2)">
+                                                    <i data-lucide="edit" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 transition-transform duration-200 hover:text-red-800 hover:scale-110" onclick="confirmDeleteProduct(2)">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50 table-row-appear">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Servidor Dell PowerEdge</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full transition-all duration-200 hover:bg-yellow-200">
+                                                Hardware
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Mzn 250.000,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 transition-transform duration-200 hover:text-blue-800 hover:scale-110" onclick="openEditProductModal(3)">
+                                                    <i data-lucide="edit" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 transition-transform duration-200 hover:text-red-800 hover:scale-110" onclick="confirmDeleteProduct(3)">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50 table-row-appear">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Suporte Técnico Mensal</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-purple-800 bg-purple-100 rounded-full transition-all duration-200 hover:bg-purple-200">
+                                                Suporte
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Mzn 25000,00/mês</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 transition-transform duration-200 hover:text-blue-800 hover:scale-110" onclick="openEditProductModal(4)">
+                                                    <i data-lucide="edit" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 transition-transform duration-200 hover:text-red-800 hover:scale-110" onclick="confirmDeleteProduct(4)">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50 table-row-appear">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Licença Microsoft Office 365</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full transition-all duration-200 hover:bg-green-200">
+                                                Software
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Mzn 1500,00/mês</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 transition-transform duration-200 hover:text-blue-800 hover:scale-110" onclick="openEditProductModal(5)">
+                                                    <i data-lucide="edit" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 transition-transform duration-200 hover:text-red-800 hover:scale-110" onclick="confirmDeleteProduct(5)">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- barra de navegacao -->
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-sm text-gray-500">
+                                Mostrando 1-5 de 156 produtos
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md transition-all duration-200 hover:bg-gray-50 hover:shadow">
+                                    Anterior
+                                </button>
+                                <button class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md transition-all duration-200 hover:bg-primary-700 hover:shadow">
+                                    1
+                                </button>
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md transition-all duration-200 hover:bg-gray-50 hover:shadow">
+                                    2
+                                </button>
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md transition-all duration-200 hover:bg-gray-50 hover:shadow">
+                                    3
+                                </button>
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md transition-all duration-200 hover:bg-gray-50 hover:shadow">
+                                    Próximo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- paineel pra adicionar novos produtos -->
+    <div class="fixed inset-0 z-50 hidden overflow-y-auto" id="addProductModal">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="fixed inset-0 transition-opacity duration-300 bg-gray-500 bg-opacity-75" id="modalBackdrop"></div>
+            <div class="relative w-full max-w-md p-6 mx-auto bg-white rounded-lg shadow-xl transform scale-95 opacity-0 transition-all duration-300" id="modalContent">
+                <div class="absolute top-0 right-0 pt-4 pr-4">
+                    <button type="button" class="text-gray-400 bg-white rounded-md transition-transform duration-200 hover:text-gray-500 hover:scale-110 focus:outline-none" id="closeAddProductModal">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Adicionar Novo Produto/Serviço</h3>
+                    <div class="mt-4">
+                        <form id="addProductForm">
+                            <div class="mb-4">
+                                <label for="productName" class="block text-sm font-medium text-gray-700">Nome do Produto/Serviço</label>
+                                <input type="text" id="productName" name="productName" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm transition-all duration-200 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                            </div>
+                            <!-- area de selecao das categorias dos produtos -->
+                            <div class="mb-4">
+                                <label for="category" class="block text-sm font-medium text-gray-700">Categoria</label>
+                                <select id="category" name="category" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm transition-all duration-200 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                                    <option value="software">Software</option>
+                                    <option value="hardware">Hardware</option>
+                                    <option value="consultoria">Consultoria</option>
+                                    <option value="suporte">Suporte</option>
+                                </select>
+                            </div>
+                            <!-- input pra adicionar o preco do produto -->
+                            <div class="mb-4">
+                                <label for="price" class="block text-sm font-medium text-gray-700">Preço (Mzn)</label>
+                                <input type="text" id="price" name="price" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm transition-all duration-200 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                            </div>
+                            <!-- area para adicionar a descricao do produto -->
+                            <div class="mb-4">
+                                <label for="description" class="block text-sm font-medium text-gray-700">Descrição (opcional)</label>
+                                <textarea id="description" name="description" rows="3" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm transition-all duration-200 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"></textarea>
+                            </div>
+                            <div class="flex justify-end mt-6 space-x-3">
+                                <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm transition-all duration-200 hover:bg-gray-50 hover:shadow focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2" id="cancelAddProduct">Cancelar</button>
+                                <!-- Botao para salvar o produto adicionado -->
+                                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md shadow-sm transition-all duration-200 hover:bg-primary-700 hover:shadow focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- sidebar do mobile -->
+    <div class="fixed inset-0 z-40 hidden bg-gray-600 bg-opacity-75 transition-opacity duration-300 md:hidden" id="mobileSidebar">
+        <div class="fixed inset-y-0 left-0 z-40 flex w-full max-w-xs transform -translate-x-full transition-transform duration-300 ease-in-out" id="sidebarContainer">
+            <div class="relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-body-color">
+                <div class="absolute top-0 right-0 pt-2 -mr-12">
+                    <button class="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-transform duration-200 hover:scale-110 active:scale-95" id="closeSidebar">
+                        <i data-lucide="x" class="w-6 h-6 text-white"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-1 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <div class="flex-1 h-0 mt-10 overflow-y-auto">
+                    <nav class="px-2 space-y-1">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Dashboard
+                        </a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Clientes
+                        </a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-base font-medium text-white bg-primary-600 rounded-md group transition-all duration-200 hover:bg-primary-700 menu-item-appear">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 transition-transform duration-200 group-hover:scale-110"></i>
+                            Produtos/Serviços
+                        </a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Vendas
+                        </a>
+                        <div class="pt-4 mt-6 border-t border-gray-200 menu-item-appear">
+                            <a href="#" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                                <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                                Sair
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="flex-shrink-0 w-14" aria-hidden="true">
+            </div>
+        </div>
+    </div>
+
+   <!-- codigo javascript inline --> 
+    <script>
+        // Inicializar icones da lucide
+        lucide.createIcons();
+
+        // togle de animacao para a sidebar do mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const sidebarContainer = document.getElementById('sidebarContainer');
+            
+            sidebar.classList.remove('hidden');
+            setTimeout(() => {
+                sidebar.classList.add('opacity-100');
+                sidebarContainer.classList.remove('-translate-x-full');
+            }, 50);
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const sidebarContainer = document.getElementById('sidebarContainer');
+            
+            sidebar.classList.add('opacity-0');
+            sidebarContainer.classList.add('-translate-x-full');
+            
+            setTimeout(() => {
+                sidebar.classList.add('hidden');
+            }, 300);
+        });
+
+        // paine de adicionar produto com animação
+        document.getElementById('openAddProductModal').addEventListener('click', function() {
+            const modal = document.getElementById('addProductModal');
+            const modalContent = document.getElementById('modalContent');
+            const modalBackdrop = document.getElementById('modalBackdrop');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalBackdrop.classList.add('opacity-100');
+                modalContent.classList.add('opacity-100', 'scale-100');
+                modalContent.classList.remove('scale-95');
+            }, 50);
+        });
+
+        function closeModal() {
+            const modal = document.getElementById('addProductModal');
+            const modalContent = document.getElementById('modalContent');
+            const modalBackdrop = document.getElementById('modalBackdrop');
+            
+            modalContent.classList.remove('opacity-100', 'scale-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            modalBackdrop.classList.remove('opacity-100');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        //funcoes para fechar o painel e cancelar a adicao do produto
+        document.getElementById('closeAddProductModal').addEventListener('click', closeModal);
+        document.getElementById('cancelAddProduct').addEventListener('click', closeModal);
+
+    </script>
+</body>
+</html>

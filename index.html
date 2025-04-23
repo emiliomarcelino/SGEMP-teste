@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGEMP - Dashboard</title>
+    <!-- linkagem para rodar o tailwind diretamente de um CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- linkagem da para lib pra criar graficos-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- linkagem da lib lucide de icones-->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /*animacoes css personalizaxdas */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-in {
+            animation: slideInLeft 0.3s ease-out forwards;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 2s infinite;
+        }
+        
+        .stagger-item:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-item:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-item:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-item:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* animacao para o sidebar mobile */
+        .sidebar-slide-in {
+            animation: slideInLeft 0.3s ease-out forwards;
+        }
+        
+        /* animacao para os elements do menu */
+        .menu-item-appear {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .menu-item-appear:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item-appear:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item-appear:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item-appear:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item-appear:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+
+    <!-- configuracoes personalizadas do tailwind inline -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors:
+                     { 
+                        'body-color': '#030129',
+                        "azul-btn": "#089be7",
+                        'morse-azul': '#0b96ec',
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-blue-950">
+    <div class="flex h-screen overflow-hidden">
+        <!-- sidebar para pc -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-body-color border-gray-200  border-r">
+                <!-- logotipo e nome da empresa (substituir o da empresa ficticia) -->
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-10 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <!-- menu -->
+                <div class="flex flex-col flex-grow px-4 py-4 mt-10 bg-body-color">
+                    <nav class="flex-1 space-y-2">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-azul-btn rounded-md group transition-all duration-200 hover:bg-primary-700">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 transition-transform duration-200 group-hover:scale-110"></i>
+                            Dashboard
+                        </a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Clientes
+                        </a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Produtos/Serviços
+                        </a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Vendas
+                        </a>
+                    </nav>
+                    <!-- botao para terminar sessao -->
+                    <div class="mt-auto">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- conteudo superior (nome da pagina atual e nome do admin) -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Navbar -->
+            <div class="flex items-center justify-between h-16 px-6 bg-body-color ">
+                <div class="flex items-center">
+                    <button class="p-1 mr-4 text-gray-500 rounded-md md:hidden focus:outline-none focus:ring-2 focus:ring-primary-500 transition-transform duration-200 hover:scale-110 active:scale-95" id="sidebarToggle">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <h2 class="text-xl font-semibold text-white">Dashboard</h2>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 overflow-hidden bg-primary-100 rounded-full">
+                            <button><a href="perfil.html"><i data-lucide="user" class="w-full h-full p-1 text-primary-600"></i></a></button>
+                        </div>
+                        <!-- nome do admin -->
+                        <span class="max-sm:hidden font-medium text-white">Sandino Administrador</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- conteudo principal da dahsboard -->
+            <main class="flex-1 p-6 overflow-y-auto">
+                <!-- secao de onde vai mostrar o nome do admin -->
+                <div class="p-6 mb-8 bg-body-color rounded-lg shadow-sm animate-fade-in">
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div class="p-3 bg-primary-100 rounded-full">
+                                <i data-lucide="user" class="w-8 h-8 text-primary-600"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <!-- nome do admin deve estar aqui-->
+                            <h3 class="text-2xl font-bold text-white">Olá, Sandino Administrador!</h3>
+                            <p class="text-white">Bem-vindo de volta. Aqui está o resumo do seu negócio hoje.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- cards de resumo -->
+                <div class="grid grid-cols-1 gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <!-- total de clientes -->
+                    <div class="p-6 bg-body-color rounded-lg shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 stagger-item opacity-0 animate-fade-in">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 bg-primary-100 rounded-full">
+                                <i data-lucide="users" class="w-6 h-6 text-primary-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Total de Clientes</p>
+                                <p class="text-2xl font-semibold text-white transition-all duration-300 hover:text-primary-600">248</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- total de produtos ou servicos -->
+                    <div class="p-6 bg-body-color rounded-lg shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 stagger-item opacity-0 animate-fade-in ">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 bg-blue-100 rounded-full">
+                                <i data-lucide="package" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Total de Produtos</p>
+                                <p class="text-2xl font-semibold text-white transition-all duration-300 hover:text-blue-600">156</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- total de vendas feitas -->
+                    <div class="p-6 bg-body-color rounded-lg shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 stagger-item opacity-0 animate-fade-in">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 bg-green-100 rounded-full">
+                                <i data-lucide="shopping-cart" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Total de Vendas</p>
+                                <p class="text-2xl font-semibold text-white transition-all duration-300 hover:text-green-600">1,352</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- faturamento total -->
+                    <div class="p-6 bg-body-color rounded-lg shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 stagger-item opacity-0 animate-fade-in">
+                        <div class="flex items-center">
+                            <div class="p-3 mr-4 bg-purple-100 rounded-full">
+                                <i data-lucide="dollar-sign" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Faturamento Total</p>
+                                <p class="text-2xl font-semibold text-white transition-all duration-300 hover:text-purple-600 animate-pulse-slow">Mzn 987.49</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- grafico de faturamento do ano x -->
+                <div class="p-6 mb-8 bg-body-color rounded-lg shadow-sm transition-all duration-300 hover:shadow-md opacity-0 animate-fade-in" style="animation-delay: 0.5s;">
+                    <h3 class="mb-4 text-lg font-medium text-gray-100">Faturamento Mensal</h3>
+                    <div class="h-80">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- ultimas vendas feitass no site -->
+                <div class="p-6 bg-white rounded-lg shadow-sm transition-all duration-300 hover:shadow-md opacity-0 animate-fade-in" style="animation-delay: 0.6s;">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-800">Últimas Vendas</h3>
+                        <a href="vendas.html" class="text-sm font-medium text-primary-600 transition-all duration-200 hover:text-primary-700 hover:underline">Ver todas</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <!-- tabela das ultimas vendas-->
+                         <!-- NB: adicionei estas vendas ficticias so pra testar, podem remover -->
+                        <table class="min-w-full divide-y divide-gray-200 bg-gray-500">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Cliente</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Data</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- dados da venda -->
+                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                    <!-- nome do cliente -->
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">Escola de condução ASA</div>
+                                    </td>
+                                    <!-- data da venda -->
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">22/01/2023</div>
+                                    </td>
+                                    <!-- valor -->
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Mzn 80.100,00</div>
+                                    </td>
+                                </tr>
+                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">Kenmare Resources PLC</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">15/03/2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Mzn 120.000,00</div>
+                                    </td>
+                                </tr>
+                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">Acess Bank Mozambique</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">03/04/2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Mzn 95.500,00</div>
+                                    </td>
+                                </tr>
+                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">Nacala Brechó</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">19/07/2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Mzn 10.000,00</div>
+                                    </td>
+                                </tr>
+                                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">Instituto de Saúde Avicena</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">18/11/2023</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Mzn 25.000,00</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- sidebar para mobile -->
+    <div class="fixed inset-0 z-40 hidden bg-gray-600 bg-opacity-75 transition-opacity duration-300 md:hidden" id="mobileSidebar">
+        <div class="fixed inset-y-0 left-0 z-40 flex w-full max-w-xs transform -translate-x-full transition-transform duration-300 ease-in-out" id="sidebarContainer">
+            <div class="relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-body-color">
+                <div class="absolute top-0 right-0 pt-2 -mr-12">
+                    <button class="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-transform duration-200 hover:scale-110 active:scale-95" id="closeSidebar">
+                        <i data-lucide="x" class="w-6 h-6 text-white"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-1 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <div class="flex-1 h-0 mt-10 overflow-y-auto">
+                    <nav class="px-2 space-y-1">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-base font-medium text-white bg-primary-600 rounded-md group transition-all duration-200 hover:bg-primary-700 menu-item-appear">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 transition-transform duration-200 group-hover:scale-110"></i>
+                            Dashboard
+                        </a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Clientes
+                        </a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Produtos/Serviços
+                        </a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Vendas
+                        </a>
+                        <div class="pt-4 mt-6 border-t border-gray-200 menu-item-appear">
+                            <!-- botao para terminar sessao -->
+                            <a href="#" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                                <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>Sair</a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="flex-shrink-0 w-14" aria-hidden="true">
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // Inicializando a funcao de icons da biblioteca lucide
+        lucide.createIcons();
+
+        // grafico de vendas com animacao
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    label: 'Faturamento em 2024',
+                    data: [18500, 22400, 19800, 24500, 27800, 25600, 28900, 31200, 29800, 32500, 34800, 36200],
+                    backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                    borderColor: 'rgba(14, 165, 233, 1)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'Mzn ' + value.toLocaleString('pt-BR');
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Mzn ' + context.parsed.y.toLocaleString('pt-BR');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Toggle para a sidebar mobile com animancao
+        document.getElementById('sidebarToggle').addEventListener('click', function(){
+        const sidebar = document.getElementById('mobileSidebar');
+        const sidebarContainer = document.getElementById('sidebarContainer');
+
+        sidebar.classList.remove('hidden');
+        setTimeout(() => {
+                sidebar.classList.add('opacity-100');
+                sidebarContainer.classList.remove('-translate-x-full');
+            }, 50);
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const sidebarContainer = document.getElementById('sidebarContainer');
+            
+            sidebar.classList.add('opacity-0');
+            sidebarContainer.classList.add('-translate-x-full');
+            
+            setTimeout(() => {
+                sidebar.classList.add('hidden');
+            }, 300);
+        });
+    </script>
+</body>
+</html>
+

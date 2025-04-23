@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGEMP - Vendas</title>
+    <!-- linkagem para rodar o tailwind diretamente de um CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+     <!-- linkagem da lib lucide de icones-->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /*Animacoes css personalizadas*/
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-in {
+            animation: slideInLeft 0.3s ease-out forwards;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 2s infinite;
+        }
+        
+        .stagger-item:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-item:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-item:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-item:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* Animacao para a barra lateral no mobile */
+        .sidebar-slide-in {
+            animation: slideInLeft 0.3s ease-out forwards;
+        }
+        
+        /* Aanimacao para os itens do menu */
+        .menu-item-appear {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .menu-item-appear:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item-appear:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item-appear:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item-appear:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item-appear:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+    <!-- configuracoes personalizadas do tailwind inline -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'body-color': '#030129',
+                        "azul-btn": "#089be7",
+                        'morse-azul': '#0b96ec',
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-blue-950">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-body-color border-gray-200  border-r">
+                <!-- logotipo e nome da empresa -->
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-10 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <!-- Menu -->
+                <div class="flex flex-col flex-grow px-4 py-4 mt-10 bg-body-color">
+                    <nav class="flex-1 space-y-2">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Dashboard
+                        </a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Clientes
+                        </a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Produtos/Serviços
+                        </a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-azul-btn rounded-md group transition-all duration-200 hover:bg-primary-700">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 transition-transform duration-200 group-hover:scale-110"></i>
+                            Vendas
+                        </a>
+                    </nav>
+                    <div class="mt-auto">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                            <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- conteudo superior -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Navbar -->
+            <div class="flex items-center justify-between h-16 px-6 bg-body-color ">
+                <div class="flex items-center">
+                    <button class="p-1 mr-4 text-gray-500 rounded-md md:hidden focus:outline-none focus:ring-2 focus:ring-primary-500 transition-transform duration-200 hover:scale-110 active:scale-95" id="sidebarToggle">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <h2 class="text-xl font-semibold text-white">Vendas</h2>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 overflow-hidden bg-primary-100 rounded-full">
+                            <button><a href="perfil.html"><i data-lucide="user" class="w-full h-full p-1 text-primary-600"></i></a></button>
+                        </div>
+                        <!-- nome do admin -->
+                        <span class="max-sm:hidden font-medium text-white">Sandino Administrador</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- conteudo principal -->
+            <main class="flex-1 p-6 overflow-y-auto">
+                <div class="flex justify-between mb-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-white">Registro de Vendas</h3>
+                        <p class="text-sm text-gray-300">Gerencie todas as vendas realizadas</p>
+                    </div>
+                    <!-- botao para abrir o painel de registar venda-->
+                    <button class="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-md" id="openAddSaleModal">
+                        <i data-lucide="plus" class="inline w-4 h-4 mr-1"></i> Registrar Venda
+                    </button>
+                </div>
+
+                <!-- filtros -->
+                <div class="p-4 mb-6 bg-body-color rounded-lg shadow-sm animate-fade-in">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                        <!-- filtro dos clientes -->
+                        <div>
+                            <label for="clientFilter" class="block text-sm font-medium text-white">Cliente</label>
+                            <select id="clientFilter" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                                <option value="">Todos os clientes</option>
+                                <option value="1">Kenmare Resources PLC</option>
+                                <option value="2">Shoprite Mz</option>
+                                <option value="3">Maria Consultoria</option>
+                            </select>
+                        </div>
+
+                        <!-- filtro do periodo -->
+                        <div>
+                            <label for="dateFilter" class="block text-sm font-medium text-white">Período</label>
+                            <select id="dateFilter" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                                <option value="all">Todas as datas</option>
+                                <option value="today">Hoje</option>
+                                <option value="week">Esta semana</option>
+                                <option value="month">Este mês</option>
+                                <option value="year">Este ano</option>
+                            </select>
+                        </div>
+
+                        <!-- area de pesquisa de vendas -->
+                        <div>
+                            <label for="search" class="block text-sm font-medium text-white">Buscar</label>
+                            <div class="relative mt-1 rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                                </div>
+                                <!-- input para digitar e receber o nome/id da venda -->
+                                <input type="text" id="search" class="block w-full py-2 pl-10 pr-3 border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 sm:text-sm" placeholder="Buscar vendas...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- tabela das vendas realizdas -->
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="p-4 sm:p-6">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Cliente</th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Data</th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Produtos/Serviços</th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Valor Total</th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <!-- dados da venda -->
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Escola de condução ASA</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">22/01/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Sistema Básico de gestão de estudantes, Consultoria em TI (10h)</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Mzn 95.100,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <!-- botao para visualizar mais sobre a venda -->
+                                                <button class="p-1 text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                                </button>
+                                                 <!-- botao para remover a venda -->
+                                                <button class="p-1 text-red-600 hover:text-red-800 transition-colors duration-200">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Kenmare Resources PLC</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">15/03/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Suporte Técnico Mensal (3 meses)</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Mzn 120.000,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 hover:text-red-800 transition-colors duration-200">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Tech Solutions S.A.</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">20/04/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Servidor Dell PowerEdge, Consultoria em TI (5h)</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Mzn 257.500,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 hover:text-red-800 transition-colors duration-200">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Maria Consultoria</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">19/04/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Licença Microsoft Office 365 (10 usuários, 12 meses)</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Mzn 180.000,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 hover:text-red-800 transition-colors duration-200">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="transition-colors duration-200 hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Shoprite mz Ltda</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">18/04/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="text-sm text-gray-900">Sistema de gestão Básico, Suporte Técnico Mensal (3 meses)</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Mzn 235.000,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex space-x-2">
+                                                <button class="p-1 text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                                </button>
+                                                <button class="p-1 text-red-600 hover:text-red-800 transition-colors duration-200">
+                                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                         <!-- barra de navegacoes -->
+                        <div class="flex items-center justify-between mt-4">
+                            <div class="text-sm text-white">
+                                Mostrando 1-5 de 1.352 vendas
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                    Anterior
+                                </button>
+                                <button class="px-3 py-1 text-sm text-white bg-primary-600 border border-primary-600 rounded-md hover:bg-primary-700 transition-colors duration-200">
+                                    1
+                                </button>
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                    2
+                                </button>
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                    3
+                                </button>
+                                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                    Próximo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- painel para registrar uma nova venda -->
+    <div class="fixed inset-0 z-50 hidden overflow-y-auto" id="addSaleModal">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-300"></div>
+            <div class="relative w-full max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-xl">
+                <div class="absolute top-0 right-0 pt-4 pr-4 transform scale-95 opacity-0 transition-all duration-300">
+                    <button type="button" class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none transition-transform duration-200 hover:scale-110 active:scale-95" id="closeAddSaleModal">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Registrar Nova Venda</h3>
+                    <div class="mt-4">
+                         <!-- fomulario para preeencher com os detalhes sobre a venda -->
+                        <form id="addSaleForm">
+                             <!-- select para selecionar o cliente da venda -->
+                            <div class="mb-4">
+                                <label for="client" class="block text-sm font-medium text-gray-700">Cliente</label>
+                                <select id="client" name="client" class="block w-full mt-1 border-gray-300 rounded-xl shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                                    <option value="">Selecione um cliente</option>
+                                    <option value="1">Empresa ABC Ltda</option>
+                                    <option value="2">João Silva ME</option>
+                                    <option value="3">Tech Solutions S.A.</option>
+                                    <option value="4">Maria Consultoria</option>
+                                    <option value="5">Comércio Rápido Ltda</option>
+                                </select>
+                            </div>
+                            
+                             <!-- input para definir a data da realizacao da venda -->
+                            <div class="mb-4">
+                                <label for="saleDate" class="block text-sm font-medium text-gray-700">Data da Venda</label>
+                                <input type="date" id="saleDate" name="saleDate" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                            </div>
+
+                            <!-- select para selecionar o produto/servico a ser vendido -->
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Produtos/Serviços</label>
+                                <div class="mt-2 space-y-3" id="productsList">
+                                    <div class="flex items-center space-x-2">
+                                        <select class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm product-select">
+                                            <option value="">Selecione um produto</option>
+                                            <option value="1" data-price="100000">Sistema de gestão  Básico - Mzn 100.000,00</option>
+                                            <option value="2" data-price="1500">Consultoria em TI - Mzn 1500,00/hora</option>
+                                            <option value="3" data-price="250000">Servidor Dell PowerEdge - Mzn 250,000,00</option>
+                                            <option value="4" data-price="20000">Suporte Técnico Mensal - Mzn 20000,00/mês</option>
+                                            <option value="5" data-price="1500">Licença Office 365 - Mzn 1500/mês</option>
+                                        </select>
+                                        <!-- input para selecionar a quantidade -->
+                                        <input type="number" placeholder="Qtd" min="1" value="1" class="block w-20 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm product-qty">
+                                        <!-- botao para remover o produto -->
+                                        <button type="button" class="p-1 text-red-600 hover:text-red-800 transition-colors duration-200 remove-product">
+                                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- botao para adicionar mais um produto -->
+                                <button type="button" class="inline-flex items-center px-3 py-1 mt-2 text-sm font-medium text-primary-600 bg-primary-50 rounded-md hover:bg-primary-100 transition-colors duration-200" id="addProductBtn">
+                                    <i data-lucide="plus" class="w-4 h-4 mr-1"></i> Adicionar Produto
+                                </button>
+                            </div>
+                            
+                            <!-- area que exibe o valor total da venda -->
+                            <div class="p-4 mb-4 bg-gray-50 rounded-md">
+                                <div class="flex justify-between">
+                                    <span class="text-sm font-medium text-gray-700">Total:</span>
+                                    <span class="text-lg font-bold text-gray-900" id="totalPrice">Mzn 0,00</span>
+                                </div>
+                            </div>
+                            
+
+                            <!-- areas do botoes de cancelar e registar a venda -->
+                            <div class="flex justify-end mt-6 space-x-3">
+                                <!-- botao para registrar venda -->
+                                <button type="button" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200" id="cancelAddSale">Cancelar</button>
+                                <!-- botao para registrar a venda -->
+                                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200">Registrar Venda
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- sidebar para mobile -->
+    <div class="fixed inset-0 z-40 hidden bg-gray-600 bg-opacity-75 transition-opacity duration-300 md:hidden" id="mobileSidebar">
+        <div class="fixed inset-y-0 left-0 z-40 flex w-full max-w-xs transform -translate-x-full transition-transform duration-300 ease-in-out" id="sidebarContainer">
+            <div class="relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-body-color">
+                <div class="absolute top-0 right-0 pt-2 -mr-12">
+                    <button class="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-transform duration-200 hover:scale-110 active:scale-95" id="closeSidebar">
+                        <i data-lucide="x" class="w-6 h-6 text-white"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col justify-center h-16 px-4 border-gray-200 mt-1 items-center">
+                    <div class="animate-fade-in animate-delay-500"><img class="h-20 w-20" src="../imagens/CapsLock icone.png" alt=""></div>
+                    <div class="text-blue-500 animate-fade-in animate-delay-800"><h1 class="text-2xl">CapsLock</h1></div>
+                </div>
+                <div class="flex-1 h-0 mt-10 overflow-y-auto">
+                    <nav class="px-2 space-y-1">
+                        <a href="index.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Dashboard
+                        </a>
+                        <a href="clientes.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="users" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Clientes
+                        </a>
+                        <a href="produtos.html" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group menu-item-appear">
+                            <i data-lucide="package" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                            Produtos/Serviços
+                        </a>
+                        <a href="vendas.html" class="flex items-center px-4 py-2 text-base font-medium text-white bg-primary-600 rounded-md group transition-all duration-200 hover:bg-primary-700 menu-item-appear">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 mr-3 transition-transform duration-200 group-hover:scale-110"></i>
+                            Vendas
+                        </a>
+                        <div class="pt-4 mt-6 border-t border-gray-200 menu-item-appear">
+                            <a href="#" class="flex items-center px-4 py-2 text-base font-medium text-gray-700 rounded-md transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 group">
+                                <i data-lucide="log-out" class="w-5 h-5 mr-3 text-gray-500 transition-transform duration-200 group-hover:text-primary-500 group-hover:scale-110"></i>
+                                Sair
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="flex-shrink-0 w-14" aria-hidden="true">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar icones da lib lucide
+        lucide.createIcons();
+
+        // toggle sidebar mobile com animacao
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const sidebarContainer = document.getElementById('sidebarContainer');
+            
+            sidebar.classList.remove('hidden');
+            setTimeout(() => {
+                sidebar.classList.add('opacity-100');
+                sidebarContainer.classList.remove('-translate-x-full');
+            }, 50);
+        });
+
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const sidebarContainer = document.getElementById('sidebarContainer');
+            
+            sidebar.classList.remove('opacity-100');
+            sidebarContainer.classList.add('-translate-x-full');
+            
+            setTimeout(() => {
+                sidebar.classList.add('hidden');
+            }, 300);
+        });
+
+        // painel de registrar venda
+        document.getElementById('openAddSaleModal').addEventListener('click', function() {
+            document.getElementById('addSaleModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeAddSaleModal').addEventListener('click', function() {
+            document.getElementById('addSaleModal').classList.add('hidden');
+        });
+
+        document.getElementById('cancelAddSale').addEventListener('click', function() {
+            document.getElementById('addSaleModal').classList.add('hidden');
+        });
+
+        // funcao para adicionar mais de um produto a venda
+        document.getElementById('addProductBtn').addEventListener('click', function() {
+            const productsList = document.getElementById('productsList');
+            const newProduct = document.createElement('div');
+            newProduct.className = 'flex items-center space-x-2';
+            newProduct.innerHTML = `
+                <select class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm product-select">
+                     <option value="">Selecione um produto</option>
+                     <option value="1" data-price="100000">Sistema de gestão  Básico - Mzn 100.000,00</option>
+                    <option value="2" data-price="1500">Consultoria em TI - Mzn 1500,00/hora</option>
+                    <option value="3" data-price="250000">Servidor Dell PowerEdge - Mzn 250,000,00</option>
+                    <option value="4" data-price="20000">Suporte Técnico Mensal - Mzn 20000,00/mês</option>
+                    <option value="5" data-price="1500">Licença Office 365 - Mzn 1500/mês</option>
+                </select>
+                <input type="number" placeholder="Qtd" min="1" value="1" class="block w-20 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm product-qty">
+                <button type="button" class="p-1 text-red-600 hover:text-red-800 transition-colors duration-200 remove-product">
+                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                </button>
+            `;
+            productsList.appendChild(newProduct);
+            lucide.createIcons();
+            
+            // evento para remover produto e atualizar o preco final
+            newProduct.querySelector('.remove-product').addEventListener('click', function() {
+                newProduct.remove();
+                updateTotalPrice();
+            });
+            
+            // Adicionar eventos para atualizar preço
+            newProduct.querySelector('.product-select').addEventListener('change', updateTotalPrice);
+            newProduct.querySelector('.product-qty').addEventListener('change', updateTotalPrice);
+        });
+        
+        // Remover produto da venda
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-product')) {
+                e.target.closest('.flex').remove();
+                updateTotalPrice();
+            }
+        });
+        
+        // funcao de atualizar o preco total
+        function updateTotalPrice() {
+            let total = 0;
+            const products = document.querySelectorAll('#productsList .flex');
+            
+            products.forEach(product => {
+                const select = product.querySelector('.product-select');
+                const qty = product.querySelector('.product-qty');
+                
+                if (select.value) {
+                    const option = select.options[select.selectedIndex];
+                    const price = parseFloat(option.getAttribute('data-price'));
+                    const quantity = parseInt(qty.value) || 1;
+                    total += price * quantity;
+                }
+            });
+            
+            document.getElementById('totalPrice').textContent = `Mzn ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        }
+        
+        // eventos iniciais selecionar/quantidadade, trocar e atualizar o preco total
+        document.querySelectorAll('.product-select, .product-qty').forEach(el => {
+            el.addEventListener('change', updateTotalPrice);
+        });
+        
+        document.querySelectorAll('.remove-product').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.flex').remove();
+                updateTotalPrice();
+            });
+        }); 
+            
+    </script>
+</body>
+</html>
